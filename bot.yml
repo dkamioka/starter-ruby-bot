@@ -7,6 +7,7 @@ config:
     friendly_name: MonkeyLearn API TOKEN
     info: This is necessary to connect to MonkeyLearn.com
     type: secret
+    global: true
 #  - name: OPTION
 #    friendly_name: Some Unnecessary Option
 #    info: This is an unnecessary option
