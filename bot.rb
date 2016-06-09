@@ -40,8 +40,6 @@ client.on :message do |data|
       traning_mode = false
       client.message channel: data['channel'], text: TRAINING_SAMPLES.to_s
       logger.debug("#{client.self['name']} parei")
-
-      break
     else 
       TRAINING_SAMPLES << data['text']
     end
