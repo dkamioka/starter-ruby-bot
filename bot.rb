@@ -38,9 +38,10 @@ client.on :message do |data|
     case data['text']
     when 'done' then
       traning_mode = false
-      client.message channel: data['channel'], text: "Ok chega"
+      client.message channel: data['channel'], text: TRAINING_SAMPLES.to_s
       logger.debug("#{client.self['name']} parei")
-      return
+
+      break
     else 
       TRAINING_SAMPLES << data['text']
     end
