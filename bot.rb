@@ -32,6 +32,8 @@ end
 
 traning_mode = false
 TRAINING_SAMPLES = Array.new
+classifying_mode = false
+CLASSIFY_TEXT = Array.new
 
 # listen for message event - https://api.slack.com/events/message
 client.on :message do |data|
@@ -45,6 +47,12 @@ client.on :message do |data|
     else 
       TRAINING_SAMPLES << data['text']
     end
+  elsif classifying_mode then
+    CLASSIFY_TEXT << data['text']
+    client.message channel: data['channel'], text: "#{monkeylearn_classify CLASSIFY_TEXT}"
+    logger.debug("#{client.self['name']} postei o resultado")
+    CLASSIFY_TEXT = []
+    classifying_mode = false
   else
     case data['text']
     when 'Start training'
@@ -52,6 +60,10 @@ client.on :message do |data|
       TRAINING_SAMPLES = []
       client.message channel: data['channel'], text: "Vai falando, quando acabar digite done."
       logger.debug("#{client.self['name']} comecei a treinar")
+    when 'Classify'
+      client.message channel: data['channel'], text: "Digite o texto que quer classificar"
+      logger.debug("#{client.self['name']} Usuario quer classificar")
+      classifying_mode = true
     end
   end
   # case data['text']

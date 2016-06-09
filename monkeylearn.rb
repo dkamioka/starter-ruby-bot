@@ -22,3 +22,8 @@ def monkeylearn_train(samples)
   r = Monkeylearn.classifiers.upload_samples('cl_ksmgNsh9', samples)
   Monkeylearn.classifiers.train('cl_ksmgNsh9')
   end
+
+def monkeylearn_classify(samples)
+  r = Monkeylearn.classifiers.classify('cl_ksmgNsh9', samples, sandbox: true)
+  r.result
+end
