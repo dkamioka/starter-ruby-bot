@@ -29,37 +29,55 @@ client.on :channel_joined do |data|
   end
 end
 
+traning_mode = false
+TRAINING_SAMPLES = Array.new
+
 # listen for message event - https://api.slack.com/events/message
 client.on :message do |data|
-
-  case data['text']
-  when 'hi', 'bot hi' then
-    client.typing channel: data['channel']
-    client.message channel: data['channel'], text: "Hello <@#{data['user']}>."
-    logger.debug("<@#{data['user']}> said hi")
-
-    if direct_message?(data)
-      client.message channel: data['channel'], text: "It\'s nice to talk to you directly."
-      logger.debug("And it was a direct message")
+  if traning_mode then
+    case data['text']
+    when 'done' then
+      traning_mode = false
+      client.message channel: data['channel']['id'], text: TRAINING_SAMPLES.to_s
+      return
+    else 
+      TRAINING_SAMPLES << data['text']
     end
-
-  when 'attachment', 'bot attachment' then
-    # attachment messages require using web_client
-    client.web_client.chat_postMessage(post_message_payload(data))
-    logger.debug("Attachment message posted")
-
-  when bot_mentioned(client)
-    client.message channel: data['channel'], text: 'You really do care about me. :heart:'
-    logger.debug("Bot mentioned in channel #{data['channel']}")
-
-  when 'bot help', 'help' then
-    client.message channel: data['channel'], text: help
-    logger.debug("A call for help")
-
-  when /^bot/ then
-    client.message channel: data['channel'], text: "Sorry <@#{data['user']}>, I don\'t understand. \n#{help}"
-    logger.debug("Unknown command")
+  else
+    case data['text']
+    when 'Start training'
+      traning_mode = true
+      client.message channel: data['channel']['id'], text: "Vamos começar o treino"
+    end
   end
+  # case data['text']
+  # when 'hi', 'bot hi' then
+  #   client.typing channel: data['channel']
+  #   client.message channel: data['channel'], text: "Hello <@#{data['user']}>."
+  #   logger.debug("<@#{data['user']}> said hi")
+
+  #   if direct_message?(data)
+  #     client.message channel: data['channel'], text: "It\'s nice to talk to you directly."
+  #     logger.debug("And it was a direct message")
+  #   end
+
+  # when 'attachment', 'bot attachment' then
+  #   # attachment messages require using web_client
+  #   client.web_client.chat_postMessage(post_message_payload(data))
+  #   logger.debug("Attachment message posted")
+
+  # when bot_mentioned(client)
+  #   client.message channel: data['channel'], text: 'You really do care about me. :heart:'
+  #   logger.debug("Bot mentioned in channel #{data['channel']}")
+
+  # when 'bot help', 'help' then
+  #   client.message channel: data['channel'], text: help
+  #   logger.debug("A call for help")
+
+  # when /^bot/ then
+  #   client.message channel: data['channel'], text: "Sorry <@#{data['user']}>, I don\'t understand. \n#{help}"
+  #   logger.debug("Unknown command")
+  # end
 end
 
 def direct_message?(data)
