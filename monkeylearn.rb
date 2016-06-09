@@ -18,7 +18,7 @@ negative_category_id = 590993  # Use real category ids, use the classifier detai
 # ]
 
 def monkeylearn_train(samples)
-  samples.map! { |x| [x, positive_category_id]}
+  samples.map! { |x| [x, 590992]}
   r = Monkeylearn.classifiers.upload_samples('cl_ksmgNsh9', samples)
   Monkeylearn.classifiers.train('cl_ksmgNsh9')
   end
