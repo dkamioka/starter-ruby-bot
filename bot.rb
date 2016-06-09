@@ -38,7 +38,7 @@ client.on :message do |data|
     case data['text']
     when 'done' then
       traning_mode = false
-      client.message channel: data['channel']['id'], text: "Ok chega"
+      client.message channel: data['channel'], text: "Ok chega"
       logger.debug("#{client.self['name']} parei")
       return
     else 
@@ -48,7 +48,7 @@ client.on :message do |data|
     case data['text']
     when 'Start training'
       traning_mode = true
-      client.message channel: data['channel']['id'], text: "Vai falando, quando acabar digite done."
+      client.message channel: data['channel'], text: "Vai falando, quando acabar digite done."
       logger.debug("#{client.self['name']} comecei a treinar")
     end
   end
