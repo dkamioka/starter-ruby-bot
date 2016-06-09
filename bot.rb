@@ -1,5 +1,6 @@
 require 'slack-ruby-client'
 require 'logging'
+require './monkeylearn.rb'
 
 logger = Logging.logger(STDOUT)
 logger.level = :debug
@@ -39,7 +40,8 @@ client.on :message do |data|
     when 'done' then
       traning_mode = false
       client.message channel: data['channel'], text: TRAINING_SAMPLES.to_s
-      logger.debug("#{client.self['name']} parei")
+      monkeylearn_train TRAINING_SAMPLES
+      logger.debug("#{client.self['name']} parei e mandei treinar")
     else 
       TRAINING_SAMPLES << data['text']
     end
@@ -47,6 +49,7 @@ client.on :message do |data|
     case data['text']
     when 'Start training'
       traning_mode = true
+      TRAINING_SAMPLES = []
       client.message channel: data['channel'], text: "Vai falando, quando acabar digite done."
       logger.debug("#{client.self['name']} comecei a treinar")
     end
