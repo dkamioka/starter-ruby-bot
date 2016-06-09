@@ -18,6 +18,8 @@ GEM
     logging (2.0.0)
       little-plugger (~> 1.1)
       multi_json (~> 1.10)
+    monkeylearn (0.2.2)
+      faraday (>= 0.9.2)
     multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -39,4 +41,5 @@ DEPENDENCIES
   faye-websocket
   httparty
   logging
+  monkeylearn
   slack-ruby-client
