@@ -64,6 +64,9 @@ client.on :message do |data|
       client.message channel: data['channel'], text: "Digite o texto que quer classificar"
       logger.debug("#{client.self['name']} Usuario quer classificar")
       classifying_mode = true
+    when 'Olá'
+      client.message channel: data['channel'], text: "Olá para você também, <@#{{data['user']}}"
+      logger.debug("#{client.self['name']} Olá para o usuário")
     end
   end
   # case data['text']
