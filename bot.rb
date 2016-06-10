@@ -67,6 +67,9 @@ client.on :message do |data|
     when 'Olá'
       client.message channel: data['channel'], text: "Olá para você também, <@#{data['user']}>."
       logger.debug("#{client.self['name']} Olá para o usuário")
+    when 'Oi'
+      client.message channel: data['channel'], text: "Oi para você também, <@#{data['user']}>."
+      logger.debug("#{client.self['name']} Oi para o usuário")
     end
   end
   # case data['text']
