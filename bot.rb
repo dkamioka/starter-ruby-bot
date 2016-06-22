@@ -74,6 +74,10 @@ client.on :message do |data|
       client.message channel: data['channel'], text: "Oi Andreazzi."
       logger.debug("#{client.self['name']} Oi para o usuário")      
     end
+  when 'Vinicius'
+      client.message channel: data['channel'], text: "Oi Vinicius."
+      logger.debug("#{client.self['name']} Oi para o usuário")      
+    end
   end
   # case data['text']
   # when 'hi', 'bot hi' then
